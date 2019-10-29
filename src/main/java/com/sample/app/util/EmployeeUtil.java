@@ -39,15 +39,71 @@ public class EmployeeUtil {
 
 	}
 
-	public static Collection<Employee> cachedEmps() {
+	public static Collection<Employee> all_cached() {
 		return employeesRepo.values();
 	}
-	
-	public static Collection<Employee> allFromDB() throws InterruptedException{
-		
+
+	public static Collection<Employee> all() throws InterruptedException {
+
 		// Intentionally introduce delay of 1 second to mock db operation
 		TimeUnit.SECONDS.sleep(1);
 		return employeesRepo.values();
+	}
+
+	public static Employee byId(int id) throws InterruptedException {
+		// Intentionally introduce delay of 1 second to mock db operation
+		TimeUnit.SECONDS.sleep(1);
+		return employeesRepo.get(id);
+	}
+
+	public static Employee create(String firstName, String lastName) throws InterruptedException {
+		// Intentionally introduce delay of 1 second to mock db operation
+		TimeUnit.SECONDS.sleep(1);
+		Employee emp = buildEmployee(firstName, lastName);
+		employeesRepo.put(emp.getId(), emp);
+		return emp;
+	}
+
+	public static Employee create(Employee emp) throws InterruptedException {
+		// Intentionally introduce delay of 1 second to mock db operation
+		TimeUnit.SECONDS.sleep(1);
+		return create(emp.getFirstName(), emp.getLastName());
+	}
+
+	public static Employee delete(int id) throws InterruptedException {
+		// Intentionally introduce delay of 1 second to mock db operation
+		TimeUnit.SECONDS.sleep(1);
+		return employeesRepo.remove(id);
+	}
+
+	public static Employee updateById(int id, Employee emp) throws InterruptedException {
+		// Intentionally introduce delay of 1 second to mock db operation
+		TimeUnit.SECONDS.sleep(1);
+		emp.setId(id);
+		return employeesRepo.put(id, emp);
+	}
+
+	public static Employee byId_cached(int id) {
+		return employeesRepo.get(id);
+	}
+
+	public static Employee create_cached(String firstName, String lastName) {
+		Employee emp = buildEmployee(firstName, lastName);
+		employeesRepo.put(emp.getId(), emp);
+		return emp;
+	}
+
+	public static Employee create_cached(Employee emp) {
+		return create_cached(emp.getFirstName(), emp.getLastName());
+	}
+
+	public static Employee delete_cached(int id) {
+		return employeesRepo.remove(id);
+	}
+
+	public static Employee updateById_cached(int id, Employee emp) {
+		emp.setId(id);
+		return employeesRepo.put(id, emp);
 	}
 
 }
